@@ -8,19 +8,18 @@ import { TrackingPage } from "./pages/TrackingPage";
 import "./App.css";
 
 function App() {
-  const [product, setProduct] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/products").then((response) => {
-      console.log(response.data);
-      setProduct(response.data);
+    axios.get("/api/cart-items?expand=product").then((response) => {
+      setCart(response.data);
     });
   }, []);
 
   return (
     <Routes>
-      <Route index element={<HomePage product={product} />} />
-      <Route path="checkout" element={<CheckoutPage product={product} />} />
+      <Route index element={<HomePage cart={cart} />} />
+      <Route path="checkout" element={<CheckoutPage cart={cart} />} />
       <Route path="orders" element={<OrdersPage />}></Route>
       <Route path="tracking" element={<TrackingPage />}></Route>
     </Routes>
